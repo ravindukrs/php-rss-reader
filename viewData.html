@@ -40,7 +40,6 @@
             xhttp.send();
         }
         function getData() {
-            console.log("Fucntion Called");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -48,6 +47,33 @@
                 }
             };
             xhttp.open("GET", "dbData.php", true);
+            xhttp.send();
+        }
+        function getDataKeyword() {
+            var keyword = document.getElementById("keyword").value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("dbOutput").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "dbDataWithKeyword.php?keyword="+keyword, true);
+            xhttp.send();
+        }
+        function addData(){
+            var title = document.getElementById("title").value;
+            var description = document.getElementById("description").value;
+            var link = document.getElementById("link").value;
+            var imglink = document.getElementById("imglink").value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("formStatus").innerHTML = "Form Submitted";
+                }
+            };
+            xhttp.open("GET", "dbAddForm.php?title="+title+"&description="+description+"&link="+link+"&imglink="+imglink, true);
             xhttp.send();
         }
     </script>
@@ -91,7 +117,24 @@
 
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <button type="button" onclick="getData()">Click me</button>
+                        
+                        <div class="row">
+                            <div class="col-sm-6, col-md-6 col-lg-6">
+                                <button type="button" class="btn btn-success" onclick="getData()">View Data from DB</button>
+                            </div>
+                            <div class="col-sm-6, col-md-6 col-lg-6">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter Keyword">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+                                        <button type="button" class="btn btn-danger" onclick="getDataKeyword()">View Data for Keyword</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
 
                         <br>
                         <div id="dbOutput">RSS-feed will be listed here...</div>
@@ -100,38 +143,27 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
-                                    <form>
+                                    <form action="#" onsubmit="addData();return false">
                                         <div class="form-group">
-                                            <label for="exampleFormControlInput1">Email address</label>
-                                            <input type="email" class="form-control" id="exampleFormControlInput1"
-                                                placeholder="name@example.com">
+                                            <label for="title">Title</label>
+                                            <input type="text" class="form-control" id="title" name="title">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Example select</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect2">Example multiple select</label>
-                                            <select multiple class="form-control" id="exampleFormControlSelect2">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1"
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" id="description" name="description"
                                                 rows="3"></textarea>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="link">Item Link</label>
+                                            <input class="form-control" id="link" name="link"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="imglink">Image Link</label>
+                                            <input class="form-control" id="imglink" name="imglink"></textarea>
+                                        </div>
+                                        <input type="submit" class="btn btn-warning" value="Submit Form">
                                     </form>
+                                    <div id="formStatus"></div>
                                 </div>
                             </div>
                         </div>
