@@ -12,10 +12,10 @@ $cursor = $collection->find( [
     'itemDescription' => new \MongoDB\BSON\Regex($keyword, 'i')
 ]
 );
-foreach ($cursor as $restaurant) {
-    echo $restaurant["itemTitle"] . "<br>";
-    echo $restaurant["itemLink"] . "<br>";
-    echo $restaurant["itemDescription"] . "<br><br><br>";
+foreach ($cursor as $item) {
+    echo $item["itemTitle"] . "<br>";
+    echo $item["itemLink"] . "<br>";
+    echo $item["itemDescription"] . "<br><br><br>";
     //var_dump($restaurant);
  };
 
